@@ -1,0 +1,169 @@
+\documentclass[
+  fontsize=12pt  %
+ ,headinclude    %
+ ,headsepline    % line between head an document text
+%,BCOR=12mm      %
+]{scrbook}       % twosided, A4 paper
+%]{article}       % twosided, A4 paper
+
+\usepackage{tabularx}
+\usepackage[table, dvipsnames]{xcolor}
+\usepackage[skins,listings,breakable]{tcolorbox}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{tocbasic}
+\usepackage{scrhack}
+\usepackage{hyperref}
+
+\makeatletter
+\patchcmd{\@classz}
+  {\CT@row@color}
+  {\oldCT@column@color}
+  {}
+  {}
+\patchcmd{\@classz}
+  {\CT@column@color}
+  {\CT@row@color}
+  {}
+  {}
+\patchcmd{\@classz}
+  {\oldCT@column@color}
+  {\CT@column@color}
+  {}
+  {}
+\makeatother
+
+\definecolor{gray1}{gray}{0.92}
+\definecolor{gray2}{gray}{0.88}
+\definecolor{gray3}{gray}{0.85}
+\definecolor{yelight}{rgb}{.9,.8,.6}
+
+\begin{document}
+\setcounter{chapter}{0}
+\setcounter{section}{0}
+
+\chapter{Package cpp2latex}
+\section{Summary}
+\begin{flushleft}
+This package \texttt{cpp2latex} converts a \texttt{C++} file into
+\LaTeX {} code, to be included in a \LaTeX {} document.
+
+It creates a box with a title and does some syntax highlighting;
+a canonical ``Hello World'' \texttt{C++} file
+looks like this:
+
+\end{flushleft}
+
+\begin{table}[ht]
+  \rowcolors{0}{gray!15}{gray!5}
+  \begin{center}
+    \scalebox{1.1}{
+      \tcbox[title=main.cc] {
+        \input{test/main.cc.tex}
+      }
+    }
+  \end{center}
+  \caption{main.cc}
+\end{table}
+
+\section{Usage}
+
+%\begin{flushleft}
+You include the generated file into your \LaTeX {} document like this:\newpage
+\begin{verbatim}
+\begin{table}[ht]
+  \rowcolors{0}{gray!15}{gray!5}
+  \begin{center}
+    \scalebox{1.1}{
+      \tcbox[title=main.cc] {
+        \input{test/main.cc.tex}
+      }
+    }
+  \end{center}
+  \caption{main.cc}
+\end{table}
+\end{verbatim}
+
+And you generate the file like this:\\
+
+\begin{verbatim}
+cat test/main.cc | bin/cpp2latex > test/main.cc.tex
+\end{verbatim}
+
+%\end{flushleft}
+
+\section{Build}
+\begin{flushleft}
+
+This package depends on reflex, a modern \texttt{C++} replacement of gnu flex.
+See \newline \href{https://www.genivia.com/doc/reflex/html/}
+{\texttt{https://www.genivia.com/doc/reflex/html/}} \newline
+
+Please check/adjust the \texttt{Makefile} to reflect how ``reflex'' is installed
+on your system.\\[1em]
+
+To build the package, you use make:\\[1em]
+
+{\verb
+make
+}\\[2em]
+
+You can also generate an example pdf file with:\\[1em]
+
+{\verb
+make example
+}\\[1em]
+
+This requires that ``pdflatex'' is installed.\\[1em]
+
+it ``installs'' the binary in \texttt{/bin/cpp2latex}; if you wish you may run\\[1em]
+
+{\verb
+make install
+}\\[1em]
+
+creates a symlink in \texttt{\textbackslash{}usr\textbackslash{}local\textbackslash{}bin}.
+\end{flushleft}
+
+\chapter{Examples}
+
+\begin{table}[ht]
+  \rowcolors{0}{gray!15}{gray!5}
+  \begin{center}
+    \scalebox{1.1}{
+      \tcbox[title=Euler14.h] {
+        \input{test/Euler14.h.tex}
+      }
+    }
+  \end{center}
+  \caption{Euler14.h}
+\end{table}
+
+
+\begin{table}[ht]
+  \rowcolors{0}{gray!15}{gray!5}
+  \begin{center}
+    \scalebox{1.0}{
+      \tcbox[title=bench.cc] {
+        \input{test/bench.cc.tex}
+      }
+    }
+  \end{center}
+  \caption{bench.cc}
+\end{table}
+
+\begin{table}[ht]
+  \rowcolors{0}{gray!15}{gray!5}
+  \begin{center}
+    \scalebox{0.5}{
+      \tcbox[title=dbinit.cc] {
+        \input{test/dbinit.cc.tex}
+      }
+    }
+  \end{center}
+  \caption{dbinit.cc}
+\end{table}
+
+\end{document}
+
+
