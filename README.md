@@ -1,6 +1,6 @@
 # cpp2latex
 
-Make sure to read example.pdf
+Make sure to read README.pdf
 
 ```
 make
